@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="step01"></div>
+
+    <div id="step02">
+        <div>{{ num }}</div>
+        <button @click="notification('test')"> <!-- 이벤트 핸들러 함수에 인수가 던져질 때는 소괄호 활용-->
+            알림
+        </button>
+    </div>
+
+    <script>
+        const {createApp, ref} = Vue;
+
+        createApp({
+            setup() {
+                const count = ref(0);
+                return {
+                    count
+                }
+            },
+            // v-on click = @click
+            template: `
+                <div>count is {{ count }}</div>
+                <button @click='count++'> 
+                    1증가
+                </button>
+            `
+        }).mount('#step01');
+
+        createApp({
+            setup() {
+                const num = ref(0);
+
+                function notification(name) {
+                    num.value++;
+                    alert(`${name}:${num.value}개 입니다.`);
+                }
+                return {
+                    num,
+                    notification
+                }
+            }
+        }).mount('#step02');
+    </script>
+</body>
+</html>
